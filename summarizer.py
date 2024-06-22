@@ -27,3 +27,11 @@ STOPWORDS = set([
 
 def remove_stopwords(tokens):
     return [t for t in tokens if t not in STOPWORDS]
+
+
+from collections import Counter
+
+def word_frequency(tokens):
+    freq = Counter(tokens)
+    max_freq = max(freq.values()) if freq else 1
+    return {word: count / max_freq for word, count in freq.items()}
