@@ -47,3 +47,9 @@ def score_sentences(sentences, word_freq):
             score /= len(words)
         scores[i] = score
     return scores
+
+
+def select_top_sentences(sentences, scores, n):
+    ranked = sorted(scores.items(), key=lambda x: x[1], reverse=True)
+    top_indices = sorted([idx for idx, _ in ranked[:n]])
+    return [sentences[i] for i in top_indices]
