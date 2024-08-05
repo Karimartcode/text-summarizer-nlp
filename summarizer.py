@@ -35,3 +35,15 @@ def word_frequency(tokens):
     freq = Counter(tokens)
     max_freq = max(freq.values()) if freq else 1
     return {word: count / max_freq for word, count in freq.items()}
+
+
+def score_sentences(sentences, word_freq):
+    scores = {}
+    for i, sentence in enumerate(sentences):
+        words = word_tokenize(sentence)
+        words = remove_stopwords(words)
+        score = sum(word_freq.get(w, 0) for w in words)
+        if len(words) > 0:
+            score /= len(words)
+        scores[i] = score
+    return scores
