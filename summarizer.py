@@ -53,3 +53,15 @@ def select_top_sentences(sentences, scores, n):
     ranked = sorted(scores.items(), key=lambda x: x[1], reverse=True)
     top_indices = sorted([idx for idx, _ in ranked[:n]])
     return [sentences[i] for i in top_indices]
+
+
+def summarize(text, num_sentences=3):
+    sentences = sentence_tokenize(text)
+    if len(sentences) <= num_sentences:
+        return text
+    all_words = word_tokenize(text)
+    filtered_words = remove_stopwords(all_words)
+    freq = word_frequency(filtered_words)
+    scores = score_sentences(sentences, freq)
+    summary_sentences = select_top_sentences(sentences, scores, num_sentences)
+    return ' '.join(summary_sentences)
