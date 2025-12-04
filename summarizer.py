@@ -83,3 +83,12 @@ def evaluate_summary(original, summary):
         "original_sentences": len(sentence_tokenize(original)),
         "summary_sentences": len(sentence_tokenize(summary))
     }
+
+
+def batch_summarize(texts, num_sentences=3):
+    return [summarize(text, num_sentences) for text in texts]
+
+
+def save_summary(summary, filepath):
+    with open(filepath, 'w', encoding='utf-8') as f:
+        f.write(summary)
