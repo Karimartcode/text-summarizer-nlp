@@ -65,3 +65,21 @@ def summarize(text, num_sentences=3):
     scores = score_sentences(sentences, freq)
     summary_sentences = select_top_sentences(sentences, scores, num_sentences)
     return ' '.join(summary_sentences)
+
+
+def evaluate_summary(original, summary):
+    orig_words = set(word_tokenize(original))
+    summ_words = set(word_tokenize(summary))
+    overlap = len(orig_words & summ_words)
+    precision = overlap / len(summ_words) if summ_words else 0
+    recall = overlap / len(orig_words) if orig_words else 0
+    f1 = 2 * precision * recall / (precision + recall) if (precision + recall) > 0 else 0
+    compression = len(summary) / len(original)
+    return {
+        "compression_ratio": compression,
+        "word_overlap_precision": precision,
+        "word_overlap_recall": recall,
+        "f1": f1,
+        "original_sentences": len(sentence_tokenize(original)),
+        "summary_sentences": len(sentence_tokenize(summary))
+    }
