@@ -92,3 +92,37 @@ def batch_summarize(texts, num_sentences=3):
 def save_summary(summary, filepath):
     with open(filepath, 'w', encoding='utf-8') as f:
         f.write(summary)
+
+
+import sys
+
+def main():
+    if len(sys.argv) > 1:
+        text = load_text(sys.argv[1])
+        n = int(sys.argv[2]) if len(sys.argv) > 2 else 3
+    else:
+        text = (
+            "Natural language processing is a subfield of linguistics and artificial intelligence. "
+            "It deals with the interaction between computers and humans using natural language. "
+            "The ultimate goal is to enable computers to understand, interpret, and generate human language. "
+            "NLP combines computational linguistics with statistical and machine learning models. "
+            "Applications include machine translation, sentiment analysis, and text summarization. "
+            "Recent advances in deep learning have significantly improved NLP performance. "
+            "Transformer models like BERT and GPT have set new benchmarks across many NLP tasks. "
+            "Text summarization can be extractive or abstractive in nature. "
+            "Extractive methods select important sentences from the original text. "
+            "Abstractive methods generate new sentences that capture the key information."
+        )
+        n = 3
+
+    summary = summarize(text, n)
+    metrics = evaluate_summary(text, summary)
+    print(f"Original: {metrics['original_sentences']} sentences")
+    print(f"Summary: {metrics['summary_sentences']} sentences")
+    print(f"Compression: {metrics['compression_ratio']:.2f}")
+    print(f"F1 overlap: {metrics['f1']:.4f}")
+    print(f"\nSummary:\n{summary}")
+
+
+if __name__ == "__main__":
+    main()
