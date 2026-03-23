@@ -1,0 +1,8 @@
+# NLP Summarizer configuration
+MAX_INPUT_LENGTH = 1024
+MAX_SUMMARY_LENGTH = 150
+MIN_SUMMARY_LENGTH = 30
+NUM_BEAMS = 4
+LENGTH_PENALTY = 2.0
+EARLY_STOPPING = True
+MODEL_NAME = "facebook/bart-large-cnn"
